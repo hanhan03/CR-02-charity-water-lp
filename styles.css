@@ -1,198 +1,250 @@
-/* charity: water Brand Colors & Fonts
-
-Primary Colors:
-- Yellow:     #FFC907
-- Blue:       #2E9DF7
-
-Secondary Colors:
-- Light Blue: #8BD1CB
-- Green:      #4FCB53
-- Orange:     #FF902A
-- Red:        #F5402C
-- Dark Green: #159A48
-- Pink:       #F16061
-
-Fonts:
-- Proxima Nova
-- Avenir
-
+/* Charity:Water – Full-bleed final
+   Colors: soft orange #FED8C1 / light blue #77A8BB
+   Font: 'Avenir','Proxima Nova', Arial, sans-serif
 */
 
-/* 
-  Charity: Water Landing Page Styles
-  This CSS uses the provided color palette and beginner-friendly styles.
-*/
+:root{
+  --bg-orange:#FED8C1;
+  --brand-blue:#77A8BB;
+  --text:#222;
+  --white:#fff;
 
-/* Set up the main font and background color for the whole page */
-body {
-  background-color: #f4f8fb; /* Soft light blue for a fresh look */
-  font-family: 'Avenir', 'Proxima Nova', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #222;
+  --radius:14px;
+  --frame-radius:22px;
+
+  --shadow:0 10px 24px rgba(0,0,0,.10);
+  --shadow-soft:0 6px 16px rgba(0,0,0,.08);
+  --inset:inset 0 -2px 0 rgba(0,0,0,.06);
 }
 
-/* Add a slight shadow and rounded corners to each section for depth */
-section {
-  background: #fff; /* White background for sections */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 2px 8px rgba(46, 157, 247, 0.07); /* Soft blue shadow */
-  margin: 24px 10px; /* Space between sections */
-  padding: 24px 16px;
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg-orange);
+  font-family:'Avenir','Proxima Nova',Arial,sans-serif;
+  color:var(--text);
+  line-height:1.6;
 }
 
-/* Hero Section Styles */
-.hero {
-  position: relative; /* Needed for overlay */
-  /* Set a background image that covers the whole section */
-  background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80');
-  background-size: cover;      /* Make the image cover the whole area */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat;
-  color: #fff;                 /* White text for contrast */
-  text-align: center;          /* Center the text */
-  padding: 60px 20px;          /* Add space above and below */
-  border-radius: 0 0 16px 16px; /* Only round bottom corners */
-
-  /* Add a dark overlay for better text readability */
-  /* This uses a simple linear-gradient overlay */
-  background-blend-mode: darken;
-  background-color: rgba(46, 157, 247, 0.45); /* Blue overlay */
+/* ===== 外框：兩側留白極少 ===== */
+.page-frame{
+  border:3px solid var(--brand-blue);
+  border-radius:var(--frame-radius);
+  margin:8px;                 /* 幾乎貼邊 */
+  background:#fff0;
+  box-shadow:0 8px 24px rgba(0,0,0,.07);
 }
 
-/* Make the headline bold and modern */
-.hero h1 {
-  font-size: 2.5em;
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin-bottom: 15px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.15); /* Soft shadow for readability */
+/* ===== Header（加寬、緊湊） ===== */
+header{position:sticky; top:0; z-index:5; background:var(--bg-orange)}
+.nav{
+  margin:0; padding:10px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:22px; color:#0b2230}
+.brand-badge{
+  width:34px; height:34px; border-radius:50%;
+  display:grid; place-items:center;
+  background:#fbd38d; border:2px solid #e2a900; font-size:18px;
+}
+.donate-btn{
+  background:var(--brand-blue); color:var(--white);
+  padding:8px 14px; border-radius:10px; font-weight:800;
+  border:2px solid rgba(0,0,0,.08);
+  box-shadow:var(--inset); transition:transform .2s;
+}
+.donate-btn:hover{transform:translateY(-2px)}
+.donate-btn:focus-visible{outline:3px solid #0b2230; outline-offset:3px}
+
+/* ===== 一般 section（卡片內容）– 幾乎滿寬 ===== */
+section{
+  background:var(--white);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin:16px 10px;           /* 小邊距 */
+  padding:22px 14px;
+  width:calc(100% - 20px);    /* 幾乎貼合 page-frame 內側 */
 }
 
-/* Style the subheadline */
-.hero p {
-  font-size: 1.2em;
-  margin-top: 0;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.12);
+/* ================= FULL-BLEED 區域 ================= */
+/* HERO：滿寬、左右貼齊、圖片更高、標題在上半部 */
+.hero{
+  position:relative;
+  margin:0; width:100%;
+  border-radius:0; box-shadow:none;
+
+  /* 圖片更大（已放在 /img/hero.png） */
+  min-height:560px;
+  padding:90px clamp(16px,3vw,32px) 60px; /* 上多、下少 → 標題抬高 */
+
+  background-image:url('img/hero.png');
+  background-size:cover;
+  background-position:center right;
+  background-repeat:no-repeat;
+
+  color:#fff; text-align:left; overflow:hidden;
+}
+/* 左→中黑色漸層遮罩（白字可讀 + 構圖像 Canva） */
+.hero::before{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg,
+    rgba(0,0,0,.84) 0%,
+    rgba(0,0,0,.62) 38%,
+    rgba(0,0,0,.22) 60%,
+    rgba(0,0,0,0) 78%);
+  pointer-events:none;
+}
+/* 文字區：直接靠內距，視覺更滿 */
+.hero h1,.hero p{
+  position:relative; z-index:1; max-width:740px; margin:0;
+}
+.hero h1{
+  font-size:clamp(44px,7vw,84px);
+  line-height:1.04; margin:0 0 14px; font-weight:800;
+  letter-spacing:.2px; text-shadow:0 2px 8px rgba(0,0,0,.22);
+}
+.hero p{
+  font-size:clamp(15px,1.8vw,18px);
+  margin:0; text-shadow:0 1px 4px rgba(0,0,0,.18);
 }
 
-/* Story Section Styles */
-.story {
-  background-color: #8BD1CB; /* Secondary Light Blue */
-  color: #222;
-  text-align: center;
-  padding: 30px 20px;
+/* Info band：滿寬、緊貼 Hero 下緣、左右貼齊 */
+.info-band{
+  width:100%; max-width:none; margin:0; padding:14px 16px;
+  background:var(--brand-blue); color:var(--white);
+  text-align:center; border:none; box-shadow:none; border-radius:0;
+  font-weight:700; letter-spacing:.2px;
 }
 
-/* Add accent color to section headings */
-h2 {
-  color: #2E9DF7; /* Primary blue */
-  margin-top: 0;
-  font-weight: bold;
+/* ================= CTA 膠囊（置中、加寬） ================= */
+.cta-strip{background:transparent; box-shadow:none; padding:0; margin:0 10px}
+.cta-row{
+  width:100%; margin:0 auto; padding:24px 0 8px;
+  display:grid; gap:18px; grid-template-columns:repeat(3,1fr);
+}
+.cta-pill{
+  background:rgba(254,216,193,.65);
+  padding:18px; border-radius:999px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 20px rgba(0,0,0,.08);
+}
+.cta-pill-inner{
+  background:var(--brand-blue); color:var(--white);
+  border:2px solid rgba(0,0,0,.08);
+  min-width:240px; min-height:56px;
+  padding:16px 26px;
+  font-weight:800; letter-spacing:.2px; text-align:center;
+  border-radius:999px; box-shadow:0 10px 28px rgba(0,0,0,.12);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.cta-pill-inner:hover{transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,0,0,.16); filter:saturate(1.05)}
+.cta-pill-inner:focus-visible{outline:3px solid #0b2230; outline-offset:3px}
+
+/* ===== 其他內容 ===== */
+h2{color:var(--brand-blue); font-weight:800; font-size:clamp(20px,2.6vw,28px); margin:0 0 8px}
+.story p{margin:0}
+
+.impact-image{
+  width:100%; max-width:360px; border-radius:12px; margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+.impact-content{text-align:left}
+
+.call-to-action{
+  background:var(--brand-blue); color:var(--white);
+  text-align:center; padding:30px 20px;
+  border-radius:16px; border:2px solid rgba(0,0,0,.05);
+}
+.donate-button{
+  display:inline-block; background:var(--white); color:#07333E;
+  padding:14px 32px; border-radius:999px; font-weight:800; font-size:1.05rem;
+  text-decoration:none; margin-top:18px; border:2px solid rgba(0,0,0,.06);
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+  transition:transform .2s, box-shadow .2s;
+}
+.donate-button:hover{transform:translateY(-2px) scale(1.03); box-shadow:0 10px 24px rgba(0,0,0,.18)}
+
+/* ===== Lower-half upgrades ===== */
+/* Stat pills (3 up) */
+.stat-row{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+  margin-top:14px;
+}
+.stat-pill{
+  background:rgba(254,216,193,.7);
+  border-radius:16px;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+  border:1px solid rgba(0,0,0,.04);
+}
+.stat-num{
+  font-weight:800; font-size:clamp(22px,3.2vw,28px);
+  color:#0b2230;
+}
+.stat-label{
+  color:#295563; /* 深藍綠，與 #77A8BB 同系 */
+  font-weight:700; letter-spacing:.2px;
+  margin-top:4px;
+}
+.stat-footnote{
+  font-size:12px; color:#5a6a70; margin-top:6px;
 }
 
-/* Call-to-Action Section Styles */
-.call-to-action {
-  background-color: #FFC907; /* Primary Yellow */
-  color: #222;
-  text-align: center;
-  padding: 30px 20px;
+/* Pull-quote card */
+.quote-card{
+  margin:16px 0 0;
+  padding:18px 20px;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 10px 22px rgba(0,0,0,.08);
+  border:1px solid rgba(0,0,0,.05);
+}
+.quote-card blockquote{
+  margin:0 0 8px; font-size:clamp(16px,2.2vw,20px);
+  line-height:1.6; font-weight:700; color:#0b2230;
+}
+.quote-card figcaption{
+  font-size:14px; color:#295563; font-weight:700;
 }
 
-/* Style the impact story image */
-.impact-image {
-  width: 100%;
-  max-width: 320px;
-  border-radius: 10px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(46, 157, 247, 0.10);
+/* FAQ (native details/summary) */
+.faq{ margin-top:18px }
+.faq h3{ margin:0 0 8px; color:#295563 }
+.faq details{
+  background:#fff; border:1px solid rgba(0,0,0,.05);
+  border-radius:12px; margin:8px 0; padding:10px 12px;
+  box-shadow:0 6px 14px rgba(0,0,0,.06);
 }
-
-/* Donate Button Styles */
-.donate-button {
-  display: inline-block;
-  background-color: #4FCB53; /* Green */
-  color: #fff;
-  padding: 14px 32px;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 1.1em;
-  margin-top: 18px;
-  box-shadow: 0 2px 8px rgba(79, 203, 83, 0.10);
-  transition: background 0.3s, transform 0.2s;
-  border: none;
-  cursor: pointer;
+.faq summary{
+  cursor:pointer; font-weight:700; color:#0b2230; outline:none;
 }
+.faq p{ margin:8px 0 0 }
 
-/* Change button color when hovered */
-.donate-button:hover {
-  background-color: #159A48; /* Dark Green */
-  transform: translateY(-2px) scale(1.04); /* Slight lift */
+/* ===== Responsive ===== */
+@media (max-width:900px){
+  .cta-row{grid-template-columns:1fr}
+  .cta-pill-inner{min-width:auto; width:100%}
 }
-
-/* Add some spacing between sections */
-section {
-  margin-bottom: 20px;
+@media (max-width:700px){
+  .stat-row{ grid-template-columns:1fr; }  /* stats 在手機改單欄 */
 }
+@media (max-width:600px){
+  .hero{min-height:420px; padding:72px 14px 28px}
+  .hero h1{font-size:36px}
+  .hero p{font-size:14px}
 
-/* 
-  Media Queries for Responsive Design
-  Media queries help make your website look good on different screen sizes,
-  like phones (small screens) and computers (large screens).
-*/
-
-/* This media query applies styles when the screen is 600px wide or less (like on most phones) */
-@media (max-width: 600px) {
-  /* Make hero section padding smaller on small screens */
-  .hero {
-    padding: 32px 8px;
-    font-size: 1em;
+  .impact-content{display:block; text-align:center}
+  .impact-image{width:90%; max-width:220px; margin:0 auto 16px}
+}
+@media (min-width:601px){
+  .impact-content{
+    display:flex; align-items:center; justify-content:center;
+    gap:24px; width:100%;
   }
-
-  /* Make headline font size smaller so it fits on small screens */
-  .hero h1 {
-    font-size: 1.4em;
-  }
-
-  /* Make subheadline font size smaller */
-  .hero p {
-    font-size: 1em;
-  }
-
-  /* Make story and call-to-action sections have less padding */
-  .story,
-  .call-to-action,
-  .donation-section {
-    padding: 14px 8px;
-  }
-
-  /* Make impact story image smaller and stack above the text */
-  .impact-content {
-    display: block; /* Stack items vertically */
-    text-align: center;
-  }
-
-  .impact-image {
-    width: 90%;    /* Make image take up most of the width */
-    max-width: 220px;
-  }
 }
 
-/* This media query applies styles when the screen is wider than 600px (like on tablets and computers) */
-@media (min-width: 601px) {
-  /* Show image and text side by side in the impact story */
-  .impact-content {
-    display: flex;           /* Place items in a row */
-    align-items: center;     /* Vertically center items */
-    justify-content: center; /* Center the whole group */
-    gap: 28px;               /* Space between image and text */
-    text-align: left;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .impact-image {
-    width: 300px;
-  }
-}
+/* ===== 細節微調（陰影/圓角更柔和） ===== */
+section{ box-shadow:0 8px 22px rgba(0,0,0,.08); border-radius:16px; }
